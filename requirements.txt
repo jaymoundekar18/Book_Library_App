@@ -1,0 +1,8 @@
+tkinter
+customtkinter
+opencv-python==4.8.0
+pillow==10.2.0
+sqlite3==0.0.1
+pandas==2.0.3
+pandastable==0.13.1
+pygame
