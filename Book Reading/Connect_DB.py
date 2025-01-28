@@ -118,8 +118,8 @@ class DB_Connect():
     except Exception as e:
       print(e)
 
-## Add Old Book Data
-  def add_old_book(self, tablename, bookname, author, genre, pages, newtime, stime, etime, rating, review, status):
+## Add Completed Old Book Data
+  def add_com_old_book(self, tablename, bookname, author, genre, pages, newtime, stime, etime, rating, review, status):
     # book_name book_author genre reading_time book_pages book_review rating book_status start_date end_date     
     
     
@@ -137,7 +137,24 @@ class DB_Connect():
     except Exception as e:
       print(e)
 
+## Add Incomplete Old Book Data
+  def add_incom_old_book(self, tablename, bookname, author, genre, pages, newtime, stime,status):
+       
+    
+    
+    query = "INSERT INTO " + tablename + " (book_name, book_author, genre, reading_time, book_pages, book_status, start_date) VALUES (?,?,?,?,?,?,?)"
+    try : 
+      self.cursor.execute(query,(bookname, author,genre,newtime,pages,status,stime))
+      self.conn.commit()
+      print("DB : time updated")
 
+      query = "SELECT * FROM " + tablename
+      self.cursor.execute(query)
+      res = self.cursor.fetchall()
+      print(res)
+    
+    except Exception as e:
+      print(e)
 
 ## Show All Book Data
   def show_all_data(self,tablename):
