@@ -284,6 +284,8 @@ class App(ct.CTk):
         self.is_newBook = False
         self.is_existingBook = False
         
+        messagebox.showinfo("Welcome",f"Hello, {self.current_user_name}! Welcome to the Virtual Book Library. \n\nWe hope you have a wonderful time exploring and reading. \nHappy Reading!")
+        
         self.dashboardframe = ct.CTkFrame(self.main_frame, width=1200, height=700, fg_color="transparent")
         self.dashboardframe.grid(row=2, column=0, pady=20, padx=20, sticky="nsew")
         
@@ -329,6 +331,8 @@ class App(ct.CTk):
         if logout:
             self.apptitlelabel.configure(text="Book Data")
             self.dashboardframe.grid_forget()
+
+            messagebox.showinfo("",f"Thank you, {self.current_user_name}, for visiting the Virtual Library! \n\nWe hope you had a great experience. Looking forward to seeing you again soon!")
 
             self.frontimgframe.grid_configure(row=2, column=0, pady=20, padx=20, sticky="nsew")
             self.frontlogframe.grid_configure(row=2, column=1, pady=20, padx=20, sticky="nsew")
@@ -446,7 +450,7 @@ class App(ct.CTk):
         self.music_var = tk.BooleanVar()
 
         self.music_check_btn = ct.CTkCheckBox(self.bookreadframe, text="Background Music", variable=self.music_var,font=("Palatino Linotype", 20), command=self.play_music)
-        self.music_check_btn.grid(row=0, column=4,padx=20, pady=10, anchor="ne")
+        self.music_check_btn.grid(row=0, column=4,padx=20, pady=10, sticky="ne")
 
         self.booktitleframe = ct.CTkFrame(self.bookreadframe, width=600, height=100, fg_color="transparent")
         self.booktitleframe.grid(row=1, column=0, columnspan=6, pady=20, padx=20, sticky="nsew")
