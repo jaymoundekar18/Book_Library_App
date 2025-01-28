@@ -1140,6 +1140,7 @@ class App(ct.CTk):
         self.rightimglabel.configure(image=ctk_image)
         self.rightimglabel.image = ctk_image
 
+        self.is_book_que = messagebox.askyesno("Important","Are you adding fully completed book ?")
                      
         self.obname_label = ct.CTkLabel(self.obdetailsframe,text="Book Title   :", fg_color="transparent",
                                       text_color="white", font=("Palatino Linotype", 20))
@@ -1195,29 +1196,30 @@ class App(ct.CTk):
         self.obstartdt_entry = ctk_date_picker.CTkDatePicker(self.obdetailsframe,width=280,height=50,bg_color="transparent",fg_color="transparent")
         self.obstartdt_entry.grid(row=6,column=3,padx=20, pady=20)
 
-        self.obenddt_label = ct.CTkLabel(self.obdetailsframe,text="Book End Date   :", fg_color="transparent",
+        if self.is_book_que:
+            self.obenddt_label = ct.CTkLabel(self.obdetailsframe,text="Book End Date   :", fg_color="transparent",
                                       text_color="white", font=("Palatino Linotype", 20))
-        self.obenddt_label.grid(row=7,column=2,padx=20, pady=20, sticky="w")
-
-        self.obenddt_entry = ctk_date_picker.CTkDatePicker(self.obdetailsframe,width=280,height=50,bg_color="transparent",fg_color="transparent")
-        self.obenddt_entry.grid(row=7,column=3,padx=20, pady=20)
-
-        self.obrate_label = ct.CTkLabel(self.obdetailsframe,text="Book Rating   :", fg_color="transparent",
-                                      text_color="white", font=("Palatino Linotype", 20))
-        self.obrate_label.grid(row=8,column=2,padx=20, pady=20, sticky="w")
-
-        self.obrate_entry = ct.CTkEntry(self.obdetailsframe,placeholder_text="eg. 4.8 (Note: Float Numbers only)",justify="center",width=350,height=50,bg_color="transparent",fg_color="transparent",font=("arial", 16))
-        self.obrate_entry.grid(row=8,column=3,padx=20, pady=20)
-
-        self.obreview_label = ct.CTkLabel(self.obdetailsframe,text="Book Review   :", fg_color="transparent",
-                                      text_color="white", font=("Palatino Linotype", 20))
-        self.obreview_label.grid(row=9,column=2,padx=20, pady=20, sticky="nw")
-
-        # self.obreview_entry = ct.CTkEntry(self.obdetailsframe,placeholder_text="Enter Book Review or Summary)",justify="center",width=350,height=50,bg_color="transparent",fg_color="transparent",font=("arial", 16))
-        # self.obreview_entry.grid(row=9,column=3,padx=20, pady=20)
-
-        self.obreview_entry = ct.CTkTextbox(self.obdetailsframe, width=350,height=400,bg_color="#3d3d3d",fg_color="transparent",font=("Palatino Linotype", 16))
-        self.obreview_entry.grid(row=9,column=3,padx=20, pady=20)
+            self.obenddt_label.grid(row=7,column=2,padx=20, pady=20, sticky="w")
+    
+            self.obenddt_entry = ctk_date_picker.CTkDatePicker(self.obdetailsframe,width=280,height=50,bg_color="transparent",fg_color="transparent")
+            self.obenddt_entry.grid(row=7,column=3,padx=20, pady=20)
+    
+            self.obrate_label = ct.CTkLabel(self.obdetailsframe,text="Book Rating   :", fg_color="transparent",
+                                          text_color="white", font=("Palatino Linotype", 20))
+            self.obrate_label.grid(row=8,column=2,padx=20, pady=20, sticky="w")
+    
+            self.obrate_entry = ct.CTkEntry(self.obdetailsframe,placeholder_text="eg. 4.8 (Note: Float Numbers only)",justify="center",width=350,height=50,bg_color="transparent",fg_color="transparent",font=("arial", 16))
+            self.obrate_entry.grid(row=8,column=3,padx=20, pady=20)
+    
+            self.obreview_label = ct.CTkLabel(self.obdetailsframe,text="Book Review   :", fg_color="transparent",
+                                          text_color="white", font=("Palatino Linotype", 20))
+            self.obreview_label.grid(row=9,column=2,padx=20, pady=20, sticky="nw")
+    
+            # self.obreview_entry = ct.CTkEntry(self.obdetailsframe,placeholder_text="Enter Book Review or Summary)",justify="center",width=350,height=50,bg_color="transparent",fg_color="transparent",font=("arial", 16))
+            # self.obreview_entry.grid(row=9,column=3,padx=20, pady=20)
+    
+            self.obreview_entry = ct.CTkTextbox(self.obdetailsframe, width=350,height=400,bg_color="#3d3d3d",fg_color="transparent",font=("Palatino Linotype", 16))
+            self.obreview_entry.grid(row=9,column=3,padx=20, pady=20)
                 
        
         self.oldbookSub_button = ct.CTkButton(self.obdetailsframe,text="",image=self.subbtnimg, hover_color="#3d3d3d",corner_radius=1000,bg_color="transparent",fg_color="transparent", width=180, height=40 ,compound="left", command=self.submit_oldbook_data)
@@ -1233,32 +1235,58 @@ class App(ct.CTk):
     def submit_oldbook_data(self):
         
         try:
-
-            if self.obname_entry.get().strip().replace(" ","") == "" or self.obauthor_entry.get().strip().replace(" ","") == "" or self.obgenre_entry.get().strip().replace(" ","") == "" or self.obreadtime_entry.get().strip().replace(" ","") == "" or self.obpage_entry.get().strip().replace(" ","") == "" or self.obstartdt_entry.get_date().strip().replace(" ","") == "" or self.obenddt_entry.get_date().strip().replace(" ","") == "" or self.obrate_entry.get().strip().replace(" ","") == "" or self.obreview_entry.get("0.0", "end-1c") == "":
-                messagebox.showwarning("Warning", "All fields are required!")
-            
-            elif isinstance(int(self.obpage_entry.get().strip().replace(" ","")), int)==False or isinstance(float(self.obrate_entry.get().strip().replace(" ","")), float)==False:
-                messagebox.showwarning("Warning","Enter Field value as mentioned!")
+            if self.is_book_que:
                 
+                if self.obname_entry.get().strip().replace(" ","") == "" or self.obauthor_entry.get().strip().replace(" ","") == "" or self.obgenre_entry.get().strip().replace(" ","") == "" or self.obreadtime_entry.get().strip().replace(" ","") == "" or self.obpage_entry.get().strip().replace(" ","") == "" or self.obstartdt_entry.get_date().strip().replace(" ","") == "" or self.obenddt_entry.get_date().strip().replace(" ","") == "" or self.obrate_entry.get().strip().replace(" ","") == "" or self.obreview_entry.get("0.0", "end-1c") == "":
+                    messagebox.showwarning("Warning", "All fields are required!")
+                
+                elif isinstance(int(self.obpage_entry.get().strip().replace(" ","")), int)==False or isinstance(float(self.obrate_entry.get().strip().replace(" ","")), float)==False:
+                    messagebox.showwarning("Warning","Enter Field value as mentioned!")
+                    
+                else:
+                    print(f''' 
+                            Table Name : {self.current_table}\n
+                            Book Name : {self.obname_entry.get().strip().replace(" ","")}\n
+                            Author : {self.obauthor_entry.get().strip().replace(" ","")}\n
+                            Genre : {self.obgenre_entry.get()}\n
+                            Time : {self.obreadtime_entry.get().strip().replace(" ","")}\n
+                            Pages : {int(self.obpage_entry.get().strip().replace(" ",""))}\n
+                            Start : {self.obstartdt_entry.get_date().strip().replace(" ","")}\n
+                            End : {self.obenddt_entry.get_date().strip().replace(" ","")}\n
+                            Rating : {float(self.obrate_entry.get().strip().replace(" ",""))}\n
+                            Review : {self.obreview_entry.get("0.0", "end-1c")}
+    
+                        ''')
+                    
+                    ab.add_com_old_book(self.current_table,self.obname_entry.get(),self.obauthor_entry.get(),self.obgenre_entry.get(),int(self.obpage_entry.get().strip().replace(" ","")),self.obreadtime_entry.get().strip().replace(" ",""),self.obstartdt_entry.get_date().strip().replace(" ",""),self.obenddt_entry.get_date().strip().replace(" ",""),float(self.obrate_entry.get().strip().replace(" ","")),self.obreview_entry.get("0.0", "end-1c"),"Completed")
+    
+                    messagebox.showinfo("Success","Your Book Data Saved Successfully!")
             else:
-                print(f''' 
-                        Table Name : {self.current_table}\n
-                        Book Name : {self.obname_entry.get().strip().replace(" ","")}\n
-                        Author : {self.obauthor_entry.get().strip().replace(" ","")}\n
-                        Genre : {self.obgenre_entry.get()}\n
-                        Time : {self.obreadtime_entry.get().strip().replace(" ","")}\n
-                        Pages : {int(self.obpage_entry.get().strip().replace(" ",""))}\n
-                        Start : {self.obstartdt_entry.get_date().strip().replace(" ","")}\n
-                        End : {self.obenddt_entry.get_date().strip().replace(" ","")}\n
-                        Rating : {float(self.obrate_entry.get().strip().replace(" ",""))}\n
-                        Review : {self.obreview_entry.get("0.0", "end-1c")}
-
-                    ''')
+                if self.obname_entry.get().strip().replace(" ","") == "" or self.obauthor_entry.get().strip().replace(" ","") == "" or self.obgenre_entry.get().strip().replace(" ","") == "" or self.obreadtime_entry.get().strip().replace(" ","") == "" or self.obpage_entry.get().strip().replace(" ","") == "" or self.obstartdt_entry.get_date().strip().replace(" ","") == "" :
+                    messagebox.showwarning("Warning", "All fields are required!")
+            
+                elif isinstance(int(self.obpage_entry.get().strip().replace(" ","")), int)==False :
+                    messagebox.showwarning("Warning","Enter Field value as mentioned!")
                 
-                ab.add_old_book(self.current_table,self.obname_entry.get(),self.obauthor_entry.get(),self.obgenre_entry.get(),int(self.obpage_entry.get().strip().replace(" ","")),self.obreadtime_entry.get().strip().replace(" ",""),self.obstartdt_entry.get_date().strip().replace(" ",""),self.obenddt_entry.get_date().strip().replace(" ",""),float(self.obrate_entry.get().strip().replace(" ","")),self.obreview_entry.get("0.0", "end-1c"),"Completed")
+                else:
+                    print(f''' 
+                            Table Name : {self.current_table}\n
+                            Book Name : {self.obname_entry.get().strip().replace(" ","")}\n
+                            Author : {self.obauthor_entry.get().strip().replace(" ","")}\n
+                            Genre : {self.obgenre_entry.get()}\n
+                            Time : {self.obreadtime_entry.get().strip().replace(" ","")}\n
+                            Pages : {int(self.obpage_entry.get().strip().replace(" ",""))}\n
+                            Start : {self.obstartdt_entry.get_date().strip().replace(" ","")}
+                            ''')
+                    
+                    ab.add_incom_old_book(self.current_table,self.obname_entry.get(),self.obauthor_entry.get(),self.obgenre_entry.get(),int(self.obpage_entry.get().strip().replace(" ","")),self.obreadtime_entry.get().strip().replace(" ",""),self.obstartdt_entry.get_date().strip().replace(" ",""),"In Progress")
 
-                messagebox.showinfo("Success","Your Book Data Saved Successfully!")
-        
+                    messagebox.showinfo("Success","Your Book Data Saved Successfully!")
+            
+            self.backtodashboard5()
+
+
+                
         except Exception as e:
             messagebox.showwarning("Warning","Enter Field value as mentioned!")
 
