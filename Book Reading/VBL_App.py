@@ -13,6 +13,7 @@ import Connect_DB as db
 import time
 import pygame
 import textwrap
+import os
 ## Setting the Database Connection
 
 ab = db.DB_Connect()
@@ -28,7 +29,7 @@ class App(ct.CTk):
     def __init__(self):
         super().__init__() 
        
-        self.title("")
+        self.title("VBL")
         self.geometry("1400x850")
 
         # Main frame for the app
@@ -39,7 +40,7 @@ class App(ct.CTk):
         self.titlelabelframe = ct.CTkFrame(self.main_frame, width=600, height=100, fg_color="transparent")
         self.titlelabelframe.grid(row=0, column=0, columnspan=10,pady=20, padx=20)  
 
-        self.apptitlelabel = ct.CTkLabel(self.titlelabelframe, text="Book Data", fg_color="transparent",
+        self.apptitlelabel = ct.CTkLabel(self.titlelabelframe, text="Virtual Book Library", fg_color="transparent",
                                       text_color="white", font=("arial black", 38))
         self.apptitlelabel.pack()  
 
@@ -203,6 +204,8 @@ class App(ct.CTk):
 
 
     def login(self):
+        # self.current_user_name = "jay"
+        # self.current_table = "jay"
         # self.changeScreen()
         if self.frontentrylabel1.get()== '' or self.frontentrylabel2.get() == '':
             messagebox.showwarning("Input Error","Enter UserID and Password")
@@ -233,8 +236,7 @@ class App(ct.CTk):
 #######################################################################
 
     def register(self):
-        print("register clicked")
-        
+                
         self.frontlogframe.grid_forget()
         self.frontregframe.grid_configure(row=2, column=1, pady=20, padx=20, sticky="nsew")
 
@@ -284,7 +286,8 @@ class App(ct.CTk):
         self.is_newBook = False
         self.is_existingBook = False
         
-        messagebox.showinfo("Welcome",f"Hello, {self.current_user_name}! Welcome to the Virtual Book Library. \n\nWe hope you have a wonderful time exploring and reading. \nHappy Reading!")
+
+        #messagebox.showinfo("Welcome",f"Hello, {self.current_user_name}! Welcome to the Virtual Book Library. \n\nWe hope you have a wonderful time exploring and reading. \nHappy Reading!")
         
         self.dashboardframe = ct.CTkFrame(self.main_frame, width=1200, height=700, fg_color="transparent")
         self.dashboardframe.grid(row=2, column=0, pady=20, padx=20, sticky="nsew")
@@ -310,7 +313,7 @@ class App(ct.CTk):
         self.emptyframe2 = ct.CTkFrame(self.dashboardframe, width=1250, height=50, fg_color="transparent")
         self.emptyframe2.grid(row=5, column=0, columnspan=9, pady=20, padx=20, sticky="nsew")
 
-        self.booklist = ct.CTkButton(self.dashboardframe,text="My Book List",width=250,height=60,corner_radius=10,text_color="white",bg_color="transparent",font=("arial", 20,"bold"), command=self.show_book_list)
+        self.booklist = ct.CTkButton(self.dashboardframe,text="My Book Details",width=250,height=60,corner_radius=10,text_color="white",bg_color="transparent",font=("arial", 20,"bold"), command=self.show_book_list)
         self.booklist.grid(row=6,column=3,padx=20, pady=20)
 
         self.showanalysis = ct.CTkButton(self.dashboardframe,text="Show Analysis",width=250,height=60,corner_radius=10,text_color="white",bg_color="transparent",font=("arial", 20,"bold"), command=self.show_book_analysis)
@@ -346,6 +349,7 @@ class App(ct.CTk):
             self.is_newBook = False
             self.is_existingBook = False
 
+            
         else:
             pass
 #######################################################################
@@ -540,7 +544,7 @@ class App(ct.CTk):
 
     def play_music(self):
         if self.music_var.get():
-            pygame.mixer.music.load("music.mp3")  
+            pygame.mixer.music.load(r"C:\Users\jaymo\Downloads\music.mp3")  
             pygame.mixer.music.play(-1)
         else:
             pygame.mixer.music.unload()
@@ -1005,7 +1009,7 @@ class App(ct.CTk):
 #######################################################################
 
     def show_book_list(self):
-        self.apptitlelabel.configure(text="Book List")
+        self.apptitlelabel.configure(text="Book Details")
 
         self.dashboardframe.grid_forget()
 
@@ -1201,35 +1205,34 @@ class App(ct.CTk):
 
         if self.is_book_que:
             self.obenddt_label = ct.CTkLabel(self.obdetailsframe,text="Book End Date   :", fg_color="transparent",
-                                      text_color="white", font=("Palatino Linotype", 20))
+                                        text_color="white", font=("Palatino Linotype", 20))
             self.obenddt_label.grid(row=7,column=2,padx=20, pady=20, sticky="w")
-    
+
             self.obenddt_entry = ctk_date_picker.CTkDatePicker(self.obdetailsframe,width=280,height=50,bg_color="transparent",fg_color="transparent")
             self.obenddt_entry.grid(row=7,column=3,padx=20, pady=20)
-    
+
             self.obrate_label = ct.CTkLabel(self.obdetailsframe,text="Book Rating   :", fg_color="transparent",
-                                          text_color="white", font=("Palatino Linotype", 20))
+                                        text_color="white", font=("Palatino Linotype", 20))
             self.obrate_label.grid(row=8,column=2,padx=20, pady=20, sticky="w")
-    
+
             self.obrate_entry = ct.CTkEntry(self.obdetailsframe,placeholder_text="eg. 4.8 (Note: Float Numbers only)",justify="center",width=350,height=50,bg_color="transparent",fg_color="transparent",font=("arial", 16))
             self.obrate_entry.grid(row=8,column=3,padx=20, pady=20)
-    
+
             self.obreview_label = ct.CTkLabel(self.obdetailsframe,text="Book Review   :", fg_color="transparent",
-                                          text_color="white", font=("Palatino Linotype", 20))
+                                        text_color="white", font=("Palatino Linotype", 20))
             self.obreview_label.grid(row=9,column=2,padx=20, pady=20, sticky="nw")
-    
-            # self.obreview_entry = ct.CTkEntry(self.obdetailsframe,placeholder_text="Enter Book Review or Summary)",justify="center",width=350,height=50,bg_color="transparent",fg_color="transparent",font=("arial", 16))
-            # self.obreview_entry.grid(row=9,column=3,padx=20, pady=20)
-    
+
+
             self.obreview_entry = ct.CTkTextbox(self.obdetailsframe, width=350,height=400,bg_color="#3d3d3d",fg_color="transparent",font=("Palatino Linotype", 16))
             self.obreview_entry.grid(row=9,column=3,padx=20, pady=20)
-                
+        
+        
        
         self.oldbookSub_button = ct.CTkButton(self.obdetailsframe,text="",image=self.subbtnimg, hover_color="#3d3d3d",corner_radius=1000,bg_color="transparent",fg_color="transparent", width=180, height=40 ,compound="left", command=self.submit_oldbook_data)
         self.oldbookSub_button.grid(row=10,column=3,padx=20, pady=40)
         
         
-        messagebox.showwarning("Important Note","Books that are already completed should be added!")
+        
 
         
 
@@ -1239,10 +1242,9 @@ class App(ct.CTk):
         
         try:
             if self.is_book_que:
-                
                 if self.obname_entry.get().strip().replace(" ","") == "" or self.obauthor_entry.get().strip().replace(" ","") == "" or self.obgenre_entry.get().strip().replace(" ","") == "" or self.obreadtime_entry.get().strip().replace(" ","") == "" or self.obpage_entry.get().strip().replace(" ","") == "" or self.obstartdt_entry.get_date().strip().replace(" ","") == "" or self.obenddt_entry.get_date().strip().replace(" ","") == "" or self.obrate_entry.get().strip().replace(" ","") == "" or self.obreview_entry.get("0.0", "end-1c") == "":
                     messagebox.showwarning("Warning", "All fields are required!")
-                
+            
                 elif isinstance(int(self.obpage_entry.get().strip().replace(" ","")), int)==False or isinstance(float(self.obrate_entry.get().strip().replace(" ","")), float)==False:
                     messagebox.showwarning("Warning","Enter Field value as mentioned!")
                     
@@ -1258,12 +1260,13 @@ class App(ct.CTk):
                             End : {self.obenddt_entry.get_date().strip().replace(" ","")}\n
                             Rating : {float(self.obrate_entry.get().strip().replace(" ",""))}\n
                             Review : {self.obreview_entry.get("0.0", "end-1c")}
-    
+
                         ''')
                     
                     ab.add_com_old_book(self.current_table,self.obname_entry.get(),self.obauthor_entry.get(),self.obgenre_entry.get(),int(self.obpage_entry.get().strip().replace(" ","")),self.obreadtime_entry.get().strip().replace(" ",""),self.obstartdt_entry.get_date().strip().replace(" ",""),self.obenddt_entry.get_date().strip().replace(" ",""),float(self.obrate_entry.get().strip().replace(" ","")),self.obreview_entry.get("0.0", "end-1c"),"Completed")
-    
+
                     messagebox.showinfo("Success","Your Book Data Saved Successfully!")
+            
             else:
                 if self.obname_entry.get().strip().replace(" ","") == "" or self.obauthor_entry.get().strip().replace(" ","") == "" or self.obgenre_entry.get().strip().replace(" ","") == "" or self.obreadtime_entry.get().strip().replace(" ","") == "" or self.obpage_entry.get().strip().replace(" ","") == "" or self.obstartdt_entry.get_date().strip().replace(" ","") == "" :
                     messagebox.showwarning("Warning", "All fields are required!")
@@ -1288,8 +1291,6 @@ class App(ct.CTk):
             
             self.backtodashboard5()
 
-
-                
         except Exception as e:
             messagebox.showwarning("Warning","Enter Field value as mentioned!")
 
@@ -1330,25 +1331,30 @@ class App(ct.CTk):
         table = Table(self.tableframe, dataframe=df, showtoolbar=True, showstatusbar=True)
         table.show()
 
+
     def download_mydata(self):
         df = ab.show_all_data(self.current_table)
         df.to_csv(r".\book_data.csv")     
         current_time = datetime.now().strftime("%Y-%m-%d")
         desktop_path = os.path.join(os.path.expanduser("~"), "Downloads")
     
-        filename = f"book_data_{current_time}.csv"
+        filename = f"{self.current_user_name} book data {current_time}.csv"
         file_path = os.path.join(desktop_path, filename)
         
         df.to_csv(file_path, index=False)
         
-        messagebox.showinfo("Successfull",f"Your book data has been successfully downloaded to \n {file_path}")    
+        messagebox.showinfo("Successfull",f"Your book data has been successfully downloaded to \n {file_path}")
+        
+
     
+
+
 #######################################################################
 
-   
+    
     def my_library(self):
         self.apptitlelabel.configure(text="Library")
-
+        self.lib_gif_flag = True
         self.dashboardframe.grid_forget()
         self.titlelabelframe.grid_forget()
 
@@ -1369,6 +1375,258 @@ class App(ct.CTk):
         
         self.templabel = ct.CTkLabel(self.booklibrarytopframe,text="             ", bg_color="transparent", width=150, height=40 , font=("Palatino Linotype", 20))
         self.templabel.grid(row=0, column=8, padx=20, pady=10,sticky="e")
+
+
+
+        self.booklibrarybtnframe = ct.CTkFrame(self.main_frame, width=1200, height=40, fg_color="transparent")
+        self.booklibrarybtnframe.pack(pady=20, padx=20)
+
+        self.mylib_button = ct.CTkButton(self.booklibrarybtnframe,text="Library",width=250,height=60,corner_radius=10,text_color="white",bg_color="transparent",font=("arial", 20,"bold"), command=self.lib_button_toggle1)
+        self.mylib_button.grid(row=0, column=1, padx=20, pady=10)
+
+        self.lib_edit_button = ct.CTkButton(self.booklibrarybtnframe,text="Edit Book Data",width=250,height=60,corner_radius=10,text_color="white",bg_color="transparent",font=("arial", 20,"bold"),command=self.lib_button_toggle2)
+        self.lib_edit_button.grid(row=0, column=2, padx=20, pady=10)
+
+        self.lib_del_button = ct.CTkButton(self.booklibrarybtnframe,text="Delete Book",width=250,height=60,corner_radius=10,text_color="white",bg_color="transparent",font=("arial", 20,"bold"),command=self.lib_button_toggle3)
+        self.lib_del_button.grid(row=0, column=3, padx=20, pady=10)
+
+        self.temp_hr_frame = ct.CTkFrame(self.booklibrarybtnframe,width=1200,height=6,fg_color="#3d3d3d")    
+        self.temp_hr_frame.grid(row=1, column=0, padx=20, pady=10,columnspan=6,sticky='nsew')
+
+        self.booklibrarygifframe = ct.CTkFrame(self.main_frame, width=1200, height=600, fg_color="transparent")
+        self.booklibrarygifframe.pack(pady=20, padx=20)
+
+        self.booklibrarymainframe = ct.CTkFrame(self.main_frame, width=1200, height=600, fg_color="transparent")
+        #self.booklibrarymainframe.pack(pady=20, padx=20)
+
+        self.booklibraryeditframe = ct.CTkFrame(self.main_frame, width=1200, height=600, fg_color="transparent")
+        #self.booklibraryeditframe.pack(pady=20, padx=20)
+
+        self.booklibrarydelframe = ct.CTkFrame(self.main_frame, width=1200, height=600, fg_color="transparent")
+        #self.booklibrarydelframe.pack(pady=20, padx=20)
+
+
+        self.lib_gifimg = ct.CTkLabel(self.booklibrarygifframe, text = "")
+        self.lib_gifimg.pack()
+
+        self.lib_gif_path = "img/lib_bg.gif"  
+        self.gif = Image.open(self.lib_gif_path)
+
+        self.resize_width = 1044  
+        self.resize_height = 735  
+
+        self.lib_frames = []
+        try:
+            while self.lib_gif_flag:
+                frame = self.gif.copy()
+                frame = frame.resize((self.resize_width, self.resize_height), Image.LANCZOS)  
+                self.lib_frames.append(ImageTk.PhotoImage(frame))
+                self.gif.seek(len(self.lib_frames)) 
+        except EOFError:
+            pass
+        
+        self.lib_current_frame = 0
+        self.lib_animation_id = None
+        self.lib_animate_gif()
+
+    def lib_animate_gif(self):
+        if self.lib_gif_flag:
+
+            if self.lib_animation_id:
+                self.after_cancel(self.lib_animation_id)
+
+            if self.lib_frames:
+                self.lib_gifimg.configure(image=self.lib_frames[self.lib_current_frame])
+                self.lib_current_frame = (self.lib_current_frame + 1) % len(self.lib_frames)
+
+            self.lib_animation_id = self.after(1500, self.lib_animate_gif)  
+    
+
+    def stop_lib_animation(self):    
+        self.lib_gif_flag = False
+        if self.lib_animation_id:
+            self.after_cancel(self.lib_animation_id)
+
+    def lib_button_toggle1(self):
+        try:
+            self.lib_gif_flag = False
+            self.booklibrarygifframe.pack_forget()
+            self.booklibraryeditframe.pack_forget()
+            self.booklibrarydelframe.pack_forget()
+
+        except Exception as e:
+            print(e)
+
+        self.booklibrarymainframe.pack(pady=20, padx=20)
+        self.current_lib_button = "Library"
+        self.lib_book_details()
+
+    def lib_button_toggle2(self):
+        try:
+            self.lib_gif_flag = False
+            self.booklibrarygifframe.pack_forget()
+            self.booklibrarymainframe.pack_forget()
+            self.booklibrarydelframe.pack_forget()
+
+        except Exception as e:
+            print(e)
+
+        self.booklibraryeditframe.pack(pady=20, padx=20)
+        self.current_lib_button = "Edit"
+        self.lib_book_details()
+
+    def lib_button_toggle3(self):
+        try:
+            self.lib_gif_flag = False
+            self.booklibrarygifframe.pack_forget()
+            self.booklibraryeditframe.pack_forget()
+            self.booklibrarymainframe.pack_forget()
+
+        except Exception as e:
+            print(e)
+
+        self.booklibrarydelframe.pack(pady=20, padx=20)
+        self.current_lib_button = "Delete"
+        self.lib_book_details()
+
+    def lib_book_details(self):
+        
+
+        if self.current_lib_button =="Library":
+
+            self.lib_detlabel = ct.CTkLabel(self.booklibrarymainframe, text = "Book Shelf : ", fg_color="transparent",
+                                        text_color="white", font=("Britannic Bold", 26,"bold"))
+            
+            self.lib_detlabel.grid(padx=10, pady=10, row=0, column=0)
+
+            temp_hr_frame0 = ct.CTkFrame(self.booklibrarymainframe,width=1000,height=6,fg_color="#3d3d3d")    
+            temp_hr_frame0.grid(padx=10, pady=10, row=1, column=0, columnspan=5 ,sticky="nsew")
+
+            lib_df = ab.show_all_data(self.current_table)
+
+            genre = sorted(list(lib_df['genre'].unique()))
+
+            btn_rowNo = 2
+            btn_colNo = 0
+            
+            for item in genre:
+                gen_button = ct.CTkButton(
+                    self.booklibrarymainframe,
+                    text=item,
+                    width=250,
+                    height=60,
+                    hover_color="#3d3d3d",
+                    corner_radius=10,
+                    text_color="white",
+                    bg_color="transparent",
+                    fg_color="#4b7552",
+                    font=("elephant", 20, "bold")
+                )
+
+                gen_button.grid(padx=10, pady=10, row=btn_rowNo, column=btn_colNo, sticky="nsew")  
+                
+                lib_book = lib_df[lib_df['genre']==item]['book_name'].tolist()
+
+                count_button = ct.CTkButton(self.booklibrarymainframe,text=f"Books Count : {len(lib_book)}",width=250,height=60,hover_color="#3d3d3d",
+                                        corner_radius=10,text_color="white", bg_color="transparent",fg_color="transparent",font=("arial", 20, "bold"))
+                count_button.grid(padx=10, pady=10, row=btn_rowNo, column=4, sticky="nsew") 
+
+
+                btn_rowNo +=1
+                book_colNO = 0
+                blen = 0
+
+                for book_name in lib_book:
+                    book_button = ct.CTkButton(
+                        self.booklibrarymainframe,
+                        text=book_name,
+                        width=200,
+                        height=50,
+                        hover_color=None,
+                        text_color="white",
+                        fg_color="transparent",
+                        font=("Berlin Sans FB Demi", 20, "bold")
+                    )
+                    book_button.grid(padx=10, pady=10, row=btn_rowNo, column=book_colNO, sticky="nsew")  
+
+                    book_colNO +=1
+                    blen += 1
+
+                    if blen > 4:
+                        book_colNO = 0
+                        btn_rowNo += 1
+                        blen = 0
+
+                btn_rowNo +=1
+                temp_hr_frame = ct.CTkFrame(self.booklibrarymainframe,width=1000,height=6,fg_color="#2f5435")    
+                temp_hr_frame.grid(padx=10, pady=10, row=btn_rowNo, column=0, columnspan=5 ,sticky="nsew")     
+                btn_rowNo +=1
+
+        elif self.current_lib_button =="Edit":
+            self.booklibraryeditframe.pack(pady=20, padx=20)
+
+            self.lib_edt_label = ct.CTkLabel(self.booklibraryeditframe, text="Edit the book you want to change !!", width=250,height=60, text_color="white",bg_color="transparent",font=("Georgia", 26, "bold"))
+
+            self.lib_edt_label.grid(row=1, column=0,padx=20, pady=20)  
+
+        elif self.current_lib_button =="Delete":
+                        
+            self.booklibrarydelframe.pack(pady=20, padx=20)
+
+            self.lib_del_label = ct.CTkLabel(self.booklibrarydelframe, text="Search the book you want to delete !!", width=250,height=60, text_color="white",bg_color="transparent",font=("Georgia", 26, "bold"))
+
+            self.lib_del_label.grid(row=1, column=0,padx=20, pady=20) 
+
+            res = ab.findUserBook(self.current_table)
+
+            books=[]
+            for book in res:
+                books.append(book[0])
+           
+            self.items= books
+            self.bsearchVar = ct.StringVar()
+
+            self.lib_searchBox = ct.CTkEntry(self.booklibrarydelframe, textvariable=self.bsearchVar,justify="center" , width=400, height=40, fg_color="transparent",
+                                      text_color="white", font=("Palatino Linotype", 20))
+            self.lib_searchBox.grid(row=2,column=0, columnspan=4,padx=20, pady=20)
+            self.lib_searchBox.bind("<KeyRelease>", self.update_dropdown)
+
+
+            self.lib_searchBtn = ct.CTkButton(self.booklibrarydelframe,text="Search",width=60, height=40,corner_radius=10,text_color="white",bg_color="transparent", font=("Palatino Linotype", 22), command=self.lib_srchBook)
+            self.lib_searchBtn.grid(row=2,column=5,padx=20, pady=20)
+
+            self.dropdown_frame = ct.CTkFrame(self.booklibrarydelframe, fg_color="transparent")
+            self.dropdown_frame.grid(row=3, column=0, columnspan=4)
+
+            self.lib_delTemp_lbl = ct.CTkLabel(self.booklibrarydelframe,text="", width=250,height=60, text_color="white",bg_color="transparent",font=("Georgia", 26, "bold"))
+            self.lib_delTemp_lbl.grid(row=4, column=0, columnspan=4)
+
+            self.lib_bookdel_btn = ct.CTkButton(self.booklibrarydelframe,text="Delete",width=140, height=50,corner_radius=10,text_color="white",bg_color="transparent", font=("Verdana", 22), command=self.delete_lib_book)
+            
+
+    def lib_srchBook(self):
+        if self.lib_searchBox.get() != '' and self.lib_searchBox.get() in self.items:
+            messagebox.showinfo("Book Found",f"{self.lib_searchBox.get()} is present in the database!")
+            self.lib_delTemp_lbl.configure(text=f"Selected book for deletion : {self.lib_searchBox.get()}")
+            self.lib_bookdel_btn.grid(row=5,column=0,padx=20, pady=20)
+
+        elif self.lib_searchBox.get() == '':
+            messagebox.showerror("Warning","Enter Book Name")
+
+        else:
+            messagebox.showerror("Error",f"{self.lib_searchBox.get()} is not present!")
+
+    def delete_lib_book(self):
+        del_ans = messagebox.askyesno("Attention",f"After deletion of book the data will not be able to recover!! \n Are you sure want to delete book '{self.lib_searchBox.get()}' ")
+        print(self.lib_searchBox.get())
+
+        if del_ans:
+            messagebox.showinfo("Successfull","Book deleted successfully!")
+            ab.del_book(self.current_table,self.lib_searchBox.get())
+            self.lib_delTemp_lbl.configure(text="")
+            self.lib_bookdel_btn.grid_forget()
+            self.lib_book_details()
+
 
 #######################################################################
 
@@ -1432,18 +1690,28 @@ class App(ct.CTk):
             self.oldbooklabel.grid_forget()
             self.dashboardframe.grid_configure(row=2, column=0, pady=20, padx=20, sticky="nsew")
             
+
     def backtodashboard6(self):
         try:
             self.backtodashboard1()
             self.librarytitlelabel.pack_forget()
             self.booklibrarytopframe.pack_forget()
+            self.booklibrarybtnframe.pack_forget()
+            self.booklibrarygifframe.pack_forget()
+            self.booklibrarymainframe.pack_forget()
+            self.booklibrarydelframe.pack_forget()
+            self.booklibraryeditframe.pack_forget()
 
         except:
             self.librarytitlelabel.pack_forget()
             self.booklibrarytopframe.pack_forget()
+            self.booklibrarybtnframe.pack_forget()
+            self.booklibrarygifframe.pack_forget()
+            self.booklibrarymainframe.pack_forget()
+            self.booklibrarydelframe.pack_forget()
+            self.booklibraryeditframe.pack_forget()
             self.dashboardframe.grid_configure(row=2, column=0, pady=20, padx=20, sticky="nsew")
             self.titlelabelframe.grid_configure(row=0, column=0, columnspan=10,pady=20, padx=20) 
-    
 
 ## Main function to run the app
 if __name__ == "__main__":
