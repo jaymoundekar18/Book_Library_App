@@ -320,7 +320,10 @@ class App(ct.CTk):
         self.emptyframe3.grid(row=7, column=0, columnspan=9, pady=20, padx=20, sticky="nsew")
 
         self.oldbook = ct.CTkButton(self.dashboardframe,text="Add Old Book",width=250,height=60,corner_radius=10,text_color="white",bg_color="transparent",font=("arial", 20,"bold"), command=self.addoldbook)
-        self.oldbook.grid(row=8,column=3, columnspan=2,padx=20, pady=20)
+        self.oldbook.grid(row=8,column=3, padx=20, pady=20)
+
+        self.mybook_lib = ct.CTkButton(self.dashboardframe,text="My Book Lib",width=250,height=60,corner_radius=10,text_color="white",bg_color="transparent",font=("arial", 20,"bold"), command=self.my_library)
+        self.mybook_lib.grid(row=8,column=4, padx=20, pady=20)
 
 #######################################################################
 
@@ -1315,8 +1318,8 @@ class App(ct.CTk):
         self.tempframe = ct.CTkFrame(self.bookanalysisframe, width=800, height=40, fg_color="transparent")
         self.tempframe.grid(row=0, column=1, padx=20, pady=10)
 
-        self.editBookData = ct.CTkButton(self.bookanalysisframe,text="Edit Data", hover_color="#3d3d3d",corner_radius=1000,bg_color="transparent", width=150, height=40 , font=("Palatino Linotype", 20),compound="left", command=self.backtodashboard4)
-        self.editBookData.grid(row=0, column=8, padx=20, pady=10,sticky="e")
+        self.downBookData = ct.CTkButton(self.bookanalysisframe,text="Download Data", hover_color="#3d3d3d",corner_radius=1000,bg_color="transparent", width=150, height=40 , font=("Palatino Linotype", 20),compound="left", command=self.download_mydata)
+        self.downBookData.grid(row=0, column=8, padx=20, pady=10,sticky="e")
 
 
         self.tableframe = ct.CTkFrame(self.main_frame, fg_color="transparent", width=700)
@@ -1327,10 +1330,45 @@ class App(ct.CTk):
         table = Table(self.tableframe, dataframe=df, showtoolbar=True, showstatusbar=True)
         table.show()
 
-        # df.to_csv("book_data.csv")     
+    def download_mydata(self):
+        df = ab.show_all_data(self.current_table)
+        df.to_csv(r".\book_data.csv")     
+        current_time = datetime.now().strftime("%Y-%m-%d")
+        desktop_path = os.path.join(os.path.expanduser("~"), "Downloads")
+    
+        filename = f"book_data_{current_time}.csv"
+        file_path = os.path.join(desktop_path, filename)
         
+        df.to_csv(file_path, index=False)
+        
+        messagebox.showinfo("Successfull",f"Your book data has been successfully downloaded to \n {file_path}")    
+    
+#######################################################################
 
-        print(df)
+   
+    def my_library(self):
+        self.apptitlelabel.configure(text="Library")
+
+        self.dashboardframe.grid_forget()
+        self.titlelabelframe.grid_forget()
+
+        self.librarytitlelabel = ct.CTkLabel(self.main_frame, text="Book Library", fg_color="transparent",
+                                      text_color="white", font=("arial black", 38))
+        self.librarytitlelabel.pack()
+
+        self.booklibrarytopframe = ct.CTkFrame(self.main_frame, width=1200, height=40, fg_color="transparent")
+        self.booklibrarytopframe.pack(pady=20, padx=20)
+
+        image = Image.open("img/home.png")
+        ctk_image = ct.CTkImage(light_image=image, size=(120,35))
+        self.libbacktodash = ct.CTkButton(self.booklibrarytopframe,text="", hover_color="#3d3d3d",image=ctk_image,corner_radius=1000,bg_color="transparent",fg_color="transparent", width=150, height=40 ,compound="left", command=self.backtodashboard6)
+        self.libbacktodash.grid(row=0, column=0, padx=20, pady=10,sticky="w")
+
+        self.tempframe = ct.CTkFrame(self.booklibrarytopframe, width=800, height=40, fg_color="transparent")
+        self.tempframe.grid(row=0, column=1, padx=20, pady=10)
+        
+        self.templabel = ct.CTkLabel(self.booklibrarytopframe,text="             ", bg_color="transparent", width=150, height=40 , font=("Palatino Linotype", 20))
+        self.templabel.grid(row=0, column=8, padx=20, pady=10,sticky="e")
 
 #######################################################################
 
@@ -1394,6 +1432,18 @@ class App(ct.CTk):
             self.oldbooklabel.grid_forget()
             self.dashboardframe.grid_configure(row=2, column=0, pady=20, padx=20, sticky="nsew")
             
+    def backtodashboard6(self):
+        try:
+            self.backtodashboard1()
+            self.librarytitlelabel.pack_forget()
+            self.booklibrarytopframe.pack_forget()
+
+        except:
+            self.librarytitlelabel.pack_forget()
+            self.booklibrarytopframe.pack_forget()
+            self.dashboardframe.grid_configure(row=2, column=0, pady=20, padx=20, sticky="nsew")
+            self.titlelabelframe.grid_configure(row=0, column=0, columnspan=10,pady=20, padx=20) 
+    
 
 ## Main function to run the app
 if __name__ == "__main__":
