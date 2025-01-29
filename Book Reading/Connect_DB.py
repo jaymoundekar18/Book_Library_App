@@ -139,9 +139,7 @@ class DB_Connect():
 
 ## Add Incomplete Old Book Data
   def add_incom_old_book(self, tablename, bookname, author, genre, pages, newtime, stime,status):
-       
-    
-    
+           
     query = "INSERT INTO " + tablename + " (book_name, book_author, genre, reading_time, book_pages, book_status, start_date) VALUES (?,?,?,?,?,?,?)"
     try : 
       self.cursor.execute(query,(bookname, author,genre,newtime,pages,status,stime))
@@ -162,6 +160,18 @@ class DB_Connect():
     try :
       query = "SELECT * FROM " + tablename
       return pd.read_sql(query, self.conn)
+      
+    except Exception as e:
+      print(e)
+
+
+## Delete Book From Table
+  def del_book(self,tablename,bname):
+    query = f"DELETE FROM {tablename} WHERE book_name = '{bname}'" 
+    try:
+      self.cursor.execute(query)
+      self.conn.commit()
+      print(f"DB : {bname} book deleted successfully")
       
     except Exception as e:
       print(e)
