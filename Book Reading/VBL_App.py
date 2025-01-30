@@ -1666,7 +1666,7 @@ class App(ct.CTk):
         if self.edit_searchBox.get() != '' and self.edit_searchBox.get() in self.items:
             messagebox.showinfo("Book Found",f"{self.edit_searchBox.get()} is present in the database!")
             self.selected_book = self.edit_searchBox.get()
-            book_data = ab.show_book_data(self.current_table,self.selected_book)
+            book_data = ab.show_edit_book_data(self.current_table,self.selected_book)
 
             self.book_data_dict = {self.check_fields[i]: book_data[i] for i in range(len(self.check_fields))}
 
