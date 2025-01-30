@@ -190,7 +190,7 @@ class DB_Connect():
       print(e)
   
 ## Show Book Data
-  def show_book_data(self,tablename,bname):
+  def show_edit_book_data(self,tablename,bname):
     query = f"SELECT * FROM {tablename} WHERE book_name = '{bname}'"
     try:
       self.cursor.execute(query)
