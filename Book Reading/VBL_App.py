@@ -287,7 +287,7 @@ class App(ct.CTk):
         self.is_existingBook = False
         
 
-        #messagebox.showinfo("Welcome",f"Hello, {self.current_user_name}! Welcome to the Virtual Book Library. \n\nWe hope you have a wonderful time exploring and reading. \nHappy Reading!")
+        messagebox.showinfo("Welcome",f"Hello, {self.current_user_name}! Welcome to the Virtual Book Library. \n\nWe hope you have a wonderful time exploring and reading. \nHappy Reading!")
         
         self.dashboardframe = ct.CTkFrame(self.main_frame, width=1200, height=700, fg_color="transparent")
         self.dashboardframe.grid(row=2, column=0, pady=20, padx=20, sticky="nsew")
@@ -335,7 +335,7 @@ class App(ct.CTk):
         logout = messagebox.askyesno("Logout","Are you sure to logout?")
 
         if logout:
-            self.apptitlelabel.configure(text="Book Data")
+            self.apptitlelabel.configure(text="Virtual Book Library")
             self.dashboardframe.grid_forget()
 
             messagebox.showinfo("",f"Thank you, {self.current_user_name}, for visiting the Virtual Library! \n\nWe hope you had a great experience. Looking forward to seeing you again soon!")
@@ -1401,6 +1401,8 @@ class App(ct.CTk):
 
         self.booklibraryeditframe = ct.CTkFrame(self.main_frame, width=1200, height=600, fg_color="transparent")
         #self.booklibraryeditframe.pack(pady=20, padx=20)
+        self.bookeditchkframe = ct.CTkFrame(self.main_frame, width=1200, height=600, fg_color="transparent")
+        self.bookeditlablframe = ct.CTkFrame(self.main_frame, width=1200, height=600, fg_color="transparent")
 
         self.booklibrarydelframe = ct.CTkFrame(self.main_frame, width=1200, height=600, fg_color="transparent")
         #self.booklibrarydelframe.pack(pady=20, padx=20)
@@ -1453,6 +1455,8 @@ class App(ct.CTk):
             self.booklibrarygifframe.pack_forget()
             self.booklibraryeditframe.pack_forget()
             self.booklibrarydelframe.pack_forget()
+            self.bookeditlablframe.pack_forget()
+            self.bookeditchkframe.pack_forget()
 
         except Exception as e:
             print(e)
@@ -1481,6 +1485,8 @@ class App(ct.CTk):
             self.booklibrarygifframe.pack_forget()
             self.booklibraryeditframe.pack_forget()
             self.booklibrarymainframe.pack_forget()
+            self.bookeditlablframe.pack_forget()
+            self.bookeditchkframe.pack_forget()
 
         except Exception as e:
             print(e)
@@ -1558,16 +1564,45 @@ class App(ct.CTk):
                         blen = 0
 
                 btn_rowNo +=1
-                temp_hr_frame = ct.CTkFrame(self.booklibrarymainframe,width=1000,height=6,fg_color="#2f5435")    
+                temp_hr_frame = ct.CTkFrame(self.booklibrarymainframe,width=1000,height=5,fg_color="#668385")    
                 temp_hr_frame.grid(padx=10, pady=10, row=btn_rowNo, column=0, columnspan=5 ,sticky="nsew")     
                 btn_rowNo +=1
 
         elif self.current_lib_button =="Edit":
             self.booklibraryeditframe.pack(pady=20, padx=20)
 
-            self.lib_edt_label = ct.CTkLabel(self.booklibraryeditframe, text="Edit the book you want to change !!", width=250,height=60, text_color="white",bg_color="transparent",font=("Georgia", 26, "bold"))
-
+            self.lib_edt_label = ct.CTkLabel(self.booklibraryeditframe, text="Which book data you want to edit!!", width=250,height=60, text_color="white",bg_color="transparent",font=("Georgia", 26, "bold"))
             self.lib_edt_label.grid(row=1, column=0,padx=20, pady=20)  
+            
+            res = ab.findUserBook(self.current_table)
+
+            books=[]
+            for book in res:
+                books.append(book[0])
+           
+            self.items= books
+            self.bsearchVar = ct.StringVar()
+
+            self.edit_searchBox = ct.CTkEntry(self.booklibraryeditframe, textvariable=self.bsearchVar,justify="center" , width=400, height=40, fg_color="transparent",
+                                      text_color="white", font=("Palatino Linotype", 20))
+            self.edit_searchBox.grid(row=2,column=0, columnspan=4,padx=20, pady=20)
+            self.edit_searchBox.bind("<KeyRelease>", self.update_dropdown)
+
+
+            self.edit_searchBtn = ct.CTkButton(self.booklibraryeditframe,text="Search",width=60, height=40,corner_radius=10,text_color="white",bg_color="transparent", font=("Palatino Linotype", 22), command=self.libedit_srchBook)
+            self.edit_searchBtn.grid(row=2,column=5,padx=20, pady=20)
+
+            self.dropdown_frame = ct.CTkFrame(self.booklibraryeditframe, fg_color="transparent")
+            self.dropdown_frame.grid(row=3, column=0, columnspan=4)
+
+            self.check_fields = ['book_name', 'book_author', 'genre', 'reading_time', 'book_pages',
+                       'book_review', 'rating', 'book_status', 'start_date', 'end_date']
+
+            self.checkboxes = {}  
+            self.entry_fields = {} 
+            self.row_counter = 0 
+
+
 
         elif self.current_lib_button =="Delete":
                         
@@ -1627,6 +1662,132 @@ class App(ct.CTk):
             self.lib_bookdel_btn.grid_forget()
             self.lib_book_details()
 
+    def libedit_srchBook(self):
+        if self.edit_searchBox.get() != '' and self.edit_searchBox.get() in self.items:
+            messagebox.showinfo("Book Found",f"{self.edit_searchBox.get()} is present in the database!")
+            self.selected_book = self.edit_searchBox.get()
+            book_data = ab.show_book_data(self.current_table,self.selected_book)
+
+            self.book_data_dict = {self.check_fields[i]: book_data[i] for i in range(len(self.check_fields))}
+
+            
+
+
+            self.bookeditchkframe.pack(padx=20, pady=20)
+            row = 0
+            col = 0
+
+            for index, field in enumerate(self.check_fields):
+                var = ct.BooleanVar()  # Track checkbox state
+                checkbox = ct.CTkCheckBox(
+                    self.bookeditchkframe, text=field.replace("_", " ").title(),
+                    variable=var, command=lambda f=field, v=var: self.toggle_field(f, v),text_color="white", font=("arial black", 18)
+                )
+                checkbox.grid(row=row, column=col, padx=10, pady=5, sticky="w")
+                self.checkboxes[field] = var  # Store reference
+
+                col += 1
+                if (index + 1) % 5 == 0:  # Move to the next row after every 5 checkboxes
+                    row += 1
+                    col = 0
+
+            self.bookeditlablframe.pack(padx=20, pady=20)
+            self.edit_save_btn = ct.CTkButton(self.bookeditlablframe,text="Save Changes",width=180,height=50,corner_radius=10,state="disabled",text_color="white",bg_color="transparent",font=("arial", 20,"bold"),command=self.save_edited_bdata)
+            self.edit_save_btn.grid(row=6, column=3, padx=10, pady=30, sticky="w")
+            
+
+
+            # Clear checkboxes and entry fields
+            for field in self.check_fields:
+                self.checkboxes[field].set(False)  # Uncheck all initially
+                if field in self.entry_fields:
+                    self.entry_fields[field]['entry'].delete(0, "end")  # Clear existing entry fields
+            
+
+        elif self.edit_searchBox.get() == '':
+            messagebox.showerror("Warning","Enter Book Name")
+
+        else:
+            messagebox.showerror("Error",f"{self.edit_searchBox.get()} is not present!")
+
+    
+    def toggle_field(self, field, var):
+        
+        self.edit_save_btn.configure(state="normal")
+        if var.get():  # If checked, add input field
+            
+            self.entry_fields[field] = {}
+
+            # Determine row and column for label-entry pair (2 per row)
+            row = len(self.entry_fields) // 2  # Every 2 fields, move to the next row
+            col = (len(self.entry_fields) % 2) * 2  # Column 0 for first, Column 2 for second
+
+            # Create label and entry field
+            self.entry_fields[field]['label'] = ct.CTkLabel(self.bookeditlablframe, text=field.replace("_", " ").title(),fg_color="transparent",text_color="white", font=("Palatino Linotype", 20))
+            self.entry_fields[field]['label'].grid(row=row, column=col, padx=10, pady=5, sticky="w")
+
+            self.entry_fields[field]['entry'] = ct.CTkEntry(self.bookeditlablframe, justify="center",width=350,height=50,bg_color="transparent",fg_color="transparent",font=("arial", 16))
+            self.entry_fields[field]['entry'].grid(row=row, column=col + 1, padx=10, pady=5, sticky="w")
+
+            if self.selected_book and field in self.book_data_dict:
+                self.entry_fields[field]['entry'].insert(0, str(self.book_data_dict[field]))
+
+        else:  # If unchecked, remove input field
+            if field in self.entry_fields:
+                
+                self.entry_fields[field]['label'].destroy()
+                self.entry_fields[field]['entry'].destroy()
+                del self.entry_fields[field]
+
+                # Reset the grid layout dynamically
+        self.rearrange_entries()
+
+    def rearrange_entries(self):
+        
+        row_counter = 0
+        col_counter = 0
+
+        for field, widgets in self.entry_fields.items():
+            widgets['label'].grid(row=row_counter, column=col_counter, padx=10, pady=5, sticky="w")
+            widgets['entry'].grid(row=row_counter, column=col_counter + 1, padx=10, pady=5, sticky="w")
+
+            col_counter += 2  # Move to next column
+            if col_counter >= 4:  # Only 2 pairs per row
+                row_counter += 1
+                col_counter = 0 
+    
+    def save_edited_bdata(self):
+        
+
+        if not self.selected_book:
+            print("No book selected.")
+            return
+
+        update_data = {}
+        for field, widgets in self.entry_fields.items():
+            value = widgets['entry'].get()
+            update_data[field] = value if value else None  # Store None if empty
+
+        if not update_data:
+            print("No fields selected for update.")
+            return
+
+        # Build dynamic UPDATE query
+        query_parts = [f"{field} = ?" for field in update_data.keys()]
+        query = f"UPDATE {self.current_table} SET {', '.join(query_parts)} WHERE book_name = ?"
+        values = list(update_data.values()) + [self.selected_book]
+
+        try:
+            
+            ab.edit_book_in_data(query,values)
+            messagebox.showinfo("Successfull","Your Book Data Is Edited!!")
+        except Exception as e:
+            messagebox.showerror("Failed",f"Error updating database{e}")
+        
+        self.bookeditchkframe.pack_forget()
+        self.bookeditlablframe.pack_forget()
+        self.lib_book_details()
+        
 
 #######################################################################
 
@@ -1701,6 +1862,8 @@ class App(ct.CTk):
             self.booklibrarymainframe.pack_forget()
             self.booklibrarydelframe.pack_forget()
             self.booklibraryeditframe.pack_forget()
+            self.bookeditchkframe.pack_forget()
+            self.bookeditlablframe.pack_forget()
 
         except:
             self.librarytitlelabel.pack_forget()
@@ -1710,6 +1873,8 @@ class App(ct.CTk):
             self.booklibrarymainframe.pack_forget()
             self.booklibrarydelframe.pack_forget()
             self.booklibraryeditframe.pack_forget()
+            self.bookeditchkframe.pack_forget()
+            self.bookeditlablframe.pack_forget()
             self.dashboardframe.grid_configure(row=2, column=0, pady=20, padx=20, sticky="nsew")
             self.titlelabelframe.grid_configure(row=0, column=0, columnspan=10,pady=20, padx=20) 
 
