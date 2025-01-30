@@ -176,6 +176,31 @@ class DB_Connect():
     except Exception as e:
       print(e)
 
+
+
+## Edit Book Data From Database
+  def edit_book_in_data(self, query, values):
+    try:
+      
+      self.cursor.execute(query,values)
+      print(f"DB : Book edited successfully")
+      self.conn.commit()
+      
+    except Exception as e:
+      print(e)
+  
+## Show Book Data
+  def show_book_data(self,tablename,bname):
+    query = f"SELECT * FROM {tablename} WHERE book_name = '{bname}'"
+    try:
+      self.cursor.execute(query)
+      return self.cursor.fetchone()
+      
+    except Exception as e:
+      print(e)
+
+
+  
 ## Delete Table From Database
   def delete_table(self, tablename):
     query = "DROP TABLE IF EXISTS " + tablename.strip().replace(" ","").lower()
