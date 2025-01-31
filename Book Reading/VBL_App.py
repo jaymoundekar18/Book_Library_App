@@ -498,7 +498,7 @@ class App(ct.CTk):
 
             try:
                 start_date = datetime.now().strftime("%d/%m/%Y")
-                print("new book: "+self.current_table ,self.booktitleentrylabel.get(),self.bauthorentrylabel.get(),self.bookgenentrylabel.get() ,self.bookpgentrylabel.get(),"00:00:00",type(start_date),"New Added")
+                #print("new book: "+self.current_table ,self.booktitleentrylabel.get(),self.bauthorentrylabel.get(),self.bookgenentrylabel.get() ,self.bookpgentrylabel.get(),"00:00:00",type(start_date),"New Added")
                 
                 ab.save_new_book(self.current_table ,self.booktitleentrylabel.get(),self.bauthorentrylabel.get(),self.bookgenentrylabel.get() ,self.bookpgentrylabel.get(),"00:00:00",start_date,"New Added")
                 
@@ -524,7 +524,7 @@ class App(ct.CTk):
         self.bookreadframe.grid(row=2, column=1, pady=20, padx=20, sticky="nsew")
         self.booktitle.configure(text=title)
         
-        print("Book Saved")
+        #print("Book Saved")
 
     def startread(self):
 
@@ -722,20 +722,20 @@ class App(ct.CTk):
 
                 self.ratingLabel = ct.CTkLabel(self.bookreadframe,text=f"Rate {self.current_book_name} :", fg_color="transparent",
                                       text_color="white", font=("Palatino Linotype", 20))
-                self.ratingLabel.grid(row=5,column=2,padx=20, pady=20)
+                self.ratingLabel.grid(row=6,column=2,padx=20, pady=20)
 
                 self.ratingEntry = ct.CTkEntry(self.bookreadframe, placeholder_text="eg. 3.5, 4.0, 5  ",justify="center",width=180,height=50,bg_color="transparent",fg_color="transparent",font=("arial", 16))
-                self.ratingEntry.grid(row=5,column=3,padx=20, pady=20)
+                self.ratingEntry.grid(row=6,column=3,padx=20, pady=20)
 
                 self.reviewLabel = ct.CTkLabel(self.bookreadframe,text=f"Write book review :", fg_color="transparent",
                                       text_color="white", font=("Palatino Linotype", 20))
-                self.reviewLabel.grid(row=6,column=2,padx=20, pady=20)
+                self.reviewLabel.grid(row=7,column=2,padx=20, pady=20)
 
                 self.reviewEntry = ct.CTkTextbox(self.bookreadframe, width=600,height=400,bg_color="#3d3d3d",fg_color="transparent",font=("Palatino Linotype", 16))
-                self.reviewEntry.grid(row=7,column=2, columnspan=3,padx=20, pady=20)
+                self.reviewEntry.grid(row=8,column=2, columnspan=3,padx=20, pady=20)
                 
                 self.timesavebtn = ct.CTkButton(self.bookreadframe,text="Save Time",width=180,height=50,corner_radius=10,text_color="white",bg_color="transparent",font=("arial", 20,"bold"), command=self.update_dbtime)
-                self.timesavebtn.grid(row=8,column=3,padx=20, pady=20)
+                self.timesavebtn.grid(row=9,column=3,padx=20, pady=20)
 
             elif result:  
                 self.bookstartbtn.configure(state="disabled")
@@ -757,20 +757,20 @@ class App(ct.CTk):
 
                 self.ratingLabel1 = ct.CTkLabel(self.existingbookframe_2,text=f"Rate {self.current_book_name} :", fg_color="transparent",
                                       text_color="white", font=("Palatino Linotype", 20))
-                self.ratingLabel1.grid(row=5,column=2,padx=20, pady=20)
+                self.ratingLabel1.grid(row=6,column=2,padx=20, pady=20)
 
                 self.ratingEntry1 = ct.CTkEntry(self.existingbookframe_2, placeholder_text="eg. 3.5, 4.0, 5  ",justify="center",width=180,height=50,bg_color="transparent",fg_color="transparent",font=("arial", 16))
-                self.ratingEntry1.grid(row=5,column=3,padx=20, pady=20)
+                self.ratingEntry1.grid(row=6,column=3,padx=20, pady=20)
 
                 self.reviewLabel1 = ct.CTkLabel(self.existingbookframe_2,text=f"Write book review :", fg_color="transparent",
                                       text_color="white", font=("Palatino Linotype", 20))
-                self.reviewLabel1.grid(row=6,column=2,padx=20, pady=20)
+                self.reviewLabel1.grid(row=7,column=2,padx=20, pady=20)
 
                 self.reviewEntry1 = ct.CTkTextbox(self.existingbookframe_2, width=600,height=400,bg_color="#3d3d3d",fg_color="transparent",font=("Palatino Linotype", 16))
-                self.reviewEntry1.grid(row=7,column=2, columnspan=3,padx=20, pady=20)
+                self.reviewEntry1.grid(row=8,column=2, columnspan=3,padx=20, pady=20)
 
                 self.timesavebtn1 = ct.CTkButton(self.existingbookframe_2,text="Save Time",width=180,height=50,corner_radius=10,text_color="white",bg_color="transparent",font=("arial", 20,"bold"), command=self.update_dbtime)
-                self.timesavebtn1.grid(row=8,column=3,padx=20, pady=20)
+                self.timesavebtn1.grid(row=9,column=3,padx=20, pady=20)
 
             elif result:  
                 self.bookstartbtn1.configure(state="disabled")
@@ -790,12 +790,12 @@ class App(ct.CTk):
     def update_dbtime(self):
         if self.is_newBook:
                            
-            print("Time updated in db ", self.booktimerlabel.cget("text"))
+            #print("Time updated in db ", self.booktimerlabel.cget("text"))
             btime = self.booktimerlabel.cget("text")
 
             if self.is_completed:
                 end_date = datetime.now().strftime("%d/%m/%Y")
-                print(self.current_table, self.current_book_name, btime,self.ratingEntry.get(),self.reviewEntry.get("0.0", "end-1c"),end_date)
+                #print(self.current_table, self.current_book_name, btime,self.ratingEntry.get(),self.reviewEntry.get("0.0", "end-1c"),end_date)
 
                 ab.update_book_trr(self.current_table, self.current_book_name, btime,float(self.ratingEntry.get()),self.reviewEntry.get("0.0", "end-1c"), "Completed",end_date)
 
@@ -815,16 +815,16 @@ class App(ct.CTk):
 
         elif self.is_existingBook:
              
-            print("Time updated in existing db ", self.booktimerlabel1.cget("text"))
+            #print("Time updated in existing db ", self.booktimerlabel1.cget("text"))
             btime = self.booktimerlabel1.cget("text")
              
             if self.is_completed:
-                print("before print")
+                
                 end_date = datetime.now().strftime("%d/%m/%Y")
-                print(self.current_table, self.current_book_name, btime, float(self.ratingEntry1.get()),self.reviewEntry1.get("0.0", "end-1c"),end_date)
-                print("afore print")
+                #print(self.current_table, self.current_book_name, btime, float(self.ratingEntry1.get()),self.reviewEntry1.get("0.0", "end-1c"),end_date)
+                
                 ab.update_book_trr(self.current_table, self.current_book_name, btime, float(self.ratingEntry1.get()),self.reviewEntry1.get("0.0", "end-1c"), "Completed",end_date)
-                print("after update")
+                
                 messagebox.showinfo("Successfull", "Your reading data is saved!")
 
             else:
@@ -848,13 +848,13 @@ class App(ct.CTk):
         self.apptitlelabel.configure(text="Read Existing Book")
 
         self.dashboardframe.grid_forget()
-        print(self.current_table, self.current_user_name)
+        #print(self.current_table, self.current_user_name)
         res = ab.findUserBook(self.current_table)
 
         books=[]
         for book in res:
             books.append(book[0])
-        print(books)    
+        #print(books)    
         self.items= books
         self.bsearchVar = ct.StringVar()
 
@@ -979,17 +979,17 @@ class App(ct.CTk):
             self.existingbookframe_1.grid_forget()
             self.existingbookframe_2.grid(row=2, column=1, pady=20, padx=20, sticky="nsew")
             self.current_book_name=self.bsearchBox.get()
-            print("Searched book : ",self.bsearchBox.get())
-            print("Current book : ",self.current_book_name)
+            #print("Searched book : ",self.bsearchBox.get())
+            #print("Current book : ",self.current_book_name)
 
             res = ab.show_book_data(self.current_table)
 
-            print(res)
+            #print(res)
             nameTime = dict()
             for i in res:
                 nameTime[i[0]] = i[3]
 
-            print(nameTime)
+            #print(nameTime)
             self.booktitle.configure(text=f"Reading : {self.bsearchBox.get()}")
             self.booktimerlabel1.configure(text= nameTime[self.bsearchBox.get()])
             
@@ -997,7 +997,7 @@ class App(ct.CTk):
             time_obj = datetime.strptime(nameTime[self.bsearchBox.get()], "%H:%M:%S")
             self.existingTime = time_obj.hour * 3600 + time_obj.minute * 60 + time_obj.second
             
-            print(nameTime)
+            #print(nameTime)
 
 
         elif self.bsearchBox.get() == '':
@@ -1249,19 +1249,19 @@ class App(ct.CTk):
                     messagebox.showwarning("Warning","Enter Field value as mentioned!")
                     
                 else:
-                    print(f''' 
-                            Table Name : {self.current_table}\n
-                            Book Name : {self.obname_entry.get().strip().replace(" ","")}\n
-                            Author : {self.obauthor_entry.get().strip().replace(" ","")}\n
-                            Genre : {self.obgenre_entry.get()}\n
-                            Time : {self.obreadtime_entry.get().strip().replace(" ","")}\n
-                            Pages : {int(self.obpage_entry.get().strip().replace(" ",""))}\n
-                            Start : {self.obstartdt_entry.get_date().strip().replace(" ","")}\n
-                            End : {self.obenddt_entry.get_date().strip().replace(" ","")}\n
-                            Rating : {float(self.obrate_entry.get().strip().replace(" ",""))}\n
-                            Review : {self.obreview_entry.get("0.0", "end-1c")}
+                    # print(f''' 
+                    #         Table Name : {self.current_table}\n
+                    #         Book Name : {self.obname_entry.get().strip().replace(" ","")}\n
+                    #         Author : {self.obauthor_entry.get().strip().replace(" ","")}\n
+                    #         Genre : {self.obgenre_entry.get()}\n
+                    #         Time : {self.obreadtime_entry.get().strip().replace(" ","")}\n
+                    #         Pages : {int(self.obpage_entry.get().strip().replace(" ",""))}\n
+                    #         Start : {self.obstartdt_entry.get_date().strip().replace(" ","")}\n
+                    #         End : {self.obenddt_entry.get_date().strip().replace(" ","")}\n
+                    #         Rating : {float(self.obrate_entry.get().strip().replace(" ",""))}\n
+                    #         Review : {self.obreview_entry.get("0.0", "end-1c")}
 
-                        ''')
+                    #     ''')
                     
                     ab.add_com_old_book(self.current_table,self.obname_entry.get(),self.obauthor_entry.get(),self.obgenre_entry.get(),int(self.obpage_entry.get().strip().replace(" ","")),self.obreadtime_entry.get().strip().replace(" ",""),self.obstartdt_entry.get_date().strip().replace(" ",""),self.obenddt_entry.get_date().strip().replace(" ",""),float(self.obrate_entry.get().strip().replace(" ","")),self.obreview_entry.get("0.0", "end-1c"),"Completed")
 
@@ -1275,15 +1275,15 @@ class App(ct.CTk):
                     messagebox.showwarning("Warning","Enter Field value as mentioned!")
                 
                 else:
-                    print(f''' 
-                            Table Name : {self.current_table}\n
-                            Book Name : {self.obname_entry.get().strip().replace(" ","")}\n
-                            Author : {self.obauthor_entry.get().strip().replace(" ","")}\n
-                            Genre : {self.obgenre_entry.get()}\n
-                            Time : {self.obreadtime_entry.get().strip().replace(" ","")}\n
-                            Pages : {int(self.obpage_entry.get().strip().replace(" ",""))}\n
-                            Start : {self.obstartdt_entry.get_date().strip().replace(" ","")}
-                            ''')
+                    # print(f''' 
+                    #         Table Name : {self.current_table}\n
+                    #         Book Name : {self.obname_entry.get().strip().replace(" ","")}\n
+                    #         Author : {self.obauthor_entry.get().strip().replace(" ","")}\n
+                    #         Genre : {self.obgenre_entry.get()}\n
+                    #         Time : {self.obreadtime_entry.get().strip().replace(" ","")}\n
+                    #         Pages : {int(self.obpage_entry.get().strip().replace(" ",""))}\n
+                    #         Start : {self.obstartdt_entry.get_date().strip().replace(" ","")}
+                    #         ''')
                     
                     ab.add_incom_old_book(self.current_table,self.obname_entry.get(),self.obauthor_entry.get(),self.obgenre_entry.get(),int(self.obpage_entry.get().strip().replace(" ","")),self.obreadtime_entry.get().strip().replace(" ",""),self.obstartdt_entry.get_date().strip().replace(" ",""),"In Progress")
 
@@ -1653,7 +1653,7 @@ class App(ct.CTk):
 
     def delete_lib_book(self):
         del_ans = messagebox.askyesno("Attention",f"After deletion of book the data will not be able to recover!! \n Are you sure want to delete book '{self.lib_searchBox.get()}' ")
-        print(self.lib_searchBox.get())
+        #print(self.lib_searchBox.get())
 
         if del_ans:
             messagebox.showinfo("Successfull","Book deleted successfully!")
