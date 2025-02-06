@@ -72,3 +72,7 @@
 ## Important Note:
 1. Ensure that all required modules *(e.g., sqlite3, pandastable, CTkDatePicker)* are properly installed in your Python environment before creating the executable.
 2. If you're using a virtual environment, specify the correct paths to the libraries in the *--add-data* flags.
+3. After the executable is create and while running the executable program the app is getting crashed, then used the below command to get make the windowed executable to see the error logs
+   ```bash
+    pyinstaller --add-data "Python\Lib\site-packages\CTkDatePicker":"CTkDatePicker" --add-data "Python\Lib\site-packages\pandas":"pandas" --add-data "Python\Lib\site-packages\pandastable":"pandastable" --add-data "Python\Lib\site-packages\PIL":"PIL" --add-data "Python\Lib\site-packages\cv2":"cv2" --add-data "Python\Lib\site-packages\pygame":"pygame" --add-data "Python\Lib\sqlite3":"sqlite3" --add-data "Python\Lib\datetime.py":"datetime" --add-data "Python\Lib\textwrap.py":"textwrap" --add-data "Book Reading\Connect_DB.py":"Connect_DB" -i bicon.ico VBL_App.py
+   ```
