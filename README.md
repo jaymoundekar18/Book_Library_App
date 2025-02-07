@@ -50,7 +50,7 @@ python VBL_App.py
 - Enhance **book analysis visualization**.
 
 ## To create executable of the app 
-(**Visit Here**)[Pyinstaller.md]
+**(Visit Here)[Pyinstaller.md]**
 
 ## License
 This project is open-source and free to use under the MIT License.
