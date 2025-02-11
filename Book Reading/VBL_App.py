@@ -76,7 +76,7 @@ class App(ct.CTk):
         self.frontimglabel = ct.CTkLabel(self.frontimgframe,text="")
         self.frontimglabel.pack(padx=20, pady=10)
 
-        image = Image.open("img/book1.jpg")
+        image = Image.open("D:/code/MTCNN_Prac/Streamlit/VBL/img/book1.jpg")
 
         ctk_image = ct.CTkImage(light_image=image, size=(575,575))
         
@@ -105,20 +105,20 @@ class App(ct.CTk):
         self.frontentrylabel2.grid(row=2,column=3,padx=20, pady=20)
         
         
-        img = Image.open("img/open_eye.png")
+        img = Image.open("D:/code/MTCNN_Prac/Streamlit/VBL/img/open_eye.png")
         self.eye_open = ct.CTkImage(light_image=img, size=(35,30))
 
-        img = Image.open("img/closed_eye.png")
+        img = Image.open("D:/code/MTCNN_Prac/Streamlit/VBL/img/closed_eye.png")
         self.eye_closed = ct.CTkImage(light_image=img, size=(35,30))
 
         self.eyeButton = ct.CTkButton(self.frontlogframe,image=self.eye_open,corner_radius=20, compound="left",text="",width=40,height=40, command=self.show_password)
         self.eyeButton.grid(row=2,column=4,padx=20, pady=20)
         self.password_visible = False
 
-        img = Image.open("img/login.png")
+        img = Image.open("D:/code/MTCNN_Prac/Streamlit/VBL/img/login.png")
         self.logbtnimg = ct.CTkImage(light_image=img, dark_image=img, size=(180, 40))  
         
-        img = Image.open("img/register.png")
+        img = Image.open("D:/code/MTCNN_Prac/Streamlit/VBL/img/register.png")
         self.regbtnimg = ct.CTkImage(light_image=img, dark_image=img, size=(180, 40))  
         
 
@@ -168,7 +168,7 @@ class App(ct.CTk):
         self.regeyeButton.grid(row=4,column=4,padx=20, pady=20)
         
 
-        img = Image.open("img/submit.png")
+        img = Image.open("D:/code/MTCNN_Prac/Streamlit/VBL/img/submit.png")
         self.subbtnimg = ct.CTkImage(light_image=img, dark_image=img, size=(180, 40))  
         
         self.regSub_button = ct.CTkButton(self.frontregframe,text="", hover_color="#3d3d3d",image=self.subbtnimg,corner_radius=1000,bg_color="transparent",fg_color="transparent", width=180, height=40 ,compound="left", command=self.newRegister)
@@ -295,7 +295,7 @@ class App(ct.CTk):
         self.emptyframe1 = ct.CTkFrame(self.dashboardframe, width=1250, height=50, fg_color="transparent")
         self.emptyframe1.grid(row=0, column=0, columnspan=9, pady=20, padx=20, sticky="nsew")
 
-        img = Image.open("img/logout.png")
+        img = Image.open("D:/code/MTCNN_Prac/Streamlit/VBL/img/logout.png")
         self.loutbtnimg = ctk_image = ct.CTkImage(light_image=img, dark_image=img, size=(120, 30))  
 
         self.logout_button = ct.CTkButton(self.dashboardframe,text="", hover_color="#3d3d3d",image=self.loutbtnimg,corner_radius=1000,bg_color="transparent",fg_color="transparent", width=120, height=30 ,compound="left", command=self.logout)
@@ -377,7 +377,7 @@ class App(ct.CTk):
 
         # GIF Image configuration on left side
 
-        image = Image.open("img/home.png")
+        image = Image.open("D:/code/MTCNN_Prac/Streamlit/VBL/img/home.png")
 
         ctk_image = ct.CTkImage(light_image=image, size=(120,35))
 
@@ -388,7 +388,7 @@ class App(ct.CTk):
         self.gifimglabel = ct.CTkLabel(self.gifimgframe,text="")
         self.gifimglabel.pack(padx=20, pady=90)
 
-        image = Image.open("img/read0.png")
+        image = Image.open("D:/code/MTCNN_Prac/Streamlit/VBL/img/read0.png")
 
         ctk_image = ct.CTkImage(light_image=image, size=(600,400))
         
@@ -470,7 +470,7 @@ class App(ct.CTk):
                                       text_color="white", font=("Verdana ", 32,"bold"))
         self.booktimerlabel.grid(row=3,column=3,padx=20, pady=20) 
 
-        image = Image.open("img/sandclock.gif")
+        image = Image.open(r"D:\code\MTCNN_Prac\Streamlit\VBL\img\sandclock.gif")
 
         self.sandclockimg = ct.CTkImage(light_image=image, size=(100,100))
         
@@ -528,12 +528,12 @@ class App(ct.CTk):
 
     def startread(self):
 
-        self.gif_path_1 = "img/sandclock.gif" 
+        self.gif_path_1 = r"D:\code\MTCNN_Prac\Streamlit\VBL\img\sandclock.gif"
         self.gif_1 = Image.open(self.gif_path_1)
         self.current_frame_1 = 0
         self.frames_1 = self.load_gif_1(self.gif_1)
 
-        self.gif_paths = ["img/read1.gif", "img/read2.gif"]
+        self.gif_paths = [r"D:\code\MTCNN_Prac\Streamlit\VBL\img\read1.gif", r"D:\code\MTCNN_Prac\Streamlit\VBL\img\read2.gif"]
 
         self.frames_2 = []
         self.current_gif_index = 0  
@@ -863,7 +863,7 @@ class App(ct.CTk):
         self.gifimgframe.grid(row=2, column=0, pady=20, padx=20, sticky="nsew")  
 
         
-        image = Image.open("img/home.png")
+        image = Image.open("D:/code/MTCNN_Prac/Streamlit/VBL/img/home.png")
         ctk_image = ct.CTkImage(light_image=image, size=(120,35))
         self.backtodash = ct.CTkButton(self.gifimgframe,text="", hover_color="#3d3d3d",image=ctk_image,corner_radius=1000,bg_color="transparent",fg_color="transparent", width=150, height=40 ,compound="left", command=self.backtodashboard3)
         self.backtodash.pack(padx=20, pady=10, anchor="nw")
@@ -872,7 +872,7 @@ class App(ct.CTk):
         self.gifimglabel1 = ct.CTkLabel(self.gifimgframe,text="")
         self.gifimglabel1.pack(padx=20, pady=90)
 
-        image = Image.open("img/read0.png")
+        image = Image.open("D:/code/MTCNN_Prac/Streamlit/VBL/img/read0.png")
 
         ctk_image = ct.CTkImage(light_image=image, size=(600,400))
         
@@ -920,7 +920,7 @@ class App(ct.CTk):
                                       text_color="white", font=("Verdana ", 32,"bold"))
         self.booktimerlabel1.grid(row=3,column=3,padx=20, pady=20) 
 
-        image = Image.open("img/sandclock.gif")
+        image = Image.open(r"D:\code\MTCNN_Prac\Streamlit\VBL\img\sandclock.gif")
 
         self.sandclockimg1 = ct.CTkImage(light_image=image, size=(100,100))
         
@@ -1017,7 +1017,7 @@ class App(ct.CTk):
         self.booklistframe = ct.CTkFrame(self.main_frame, width=1200, height=700, fg_color="transparent")
         self.booklistframe.grid(row=2, column=0, pady=20, padx=20, sticky="nsew")
 
-        image = Image.open("img/home.png")
+        image = Image.open("D:/code/MTCNN_Prac/Streamlit/VBL/img/home.png")
         ctk_image = ct.CTkImage(light_image=image, size=(120,35))
         self.backtodash = ct.CTkButton(self.booklistframe,text="", hover_color="#3d3d3d",image=ctk_image,corner_radius=1000,bg_color="transparent",fg_color="transparent", width=150, height=40 ,compound="left", command=self.backtodashboard2)
         self.backtodash.grid(row=0,column=0,padx=20, pady=10, sticky="nw")
@@ -1047,6 +1047,10 @@ class App(ct.CTk):
         blen = 0
         bd= 0
         for item in books:
+            if len(item)>18:
+                item = "\n".join(textwrap.wrap(item, width=18))
+            else:
+                pass
             button = ct.CTkButton(
                 self.booklistframe,
                 text=item,
@@ -1089,8 +1093,10 @@ class App(ct.CTk):
             else:
                 wrapped_review = review
 
+            abd_bname = book[0] +'\n\n'
+
             details = f"""
-            Book Title:- {book[0]} \t Author Name:- {book[1]} \t Genre:- {book[2]} \t Status:- {book[7]} \n 
+            Book Title:- {abd_bname}  Author Name:- {book[1]} \t Genre:- {book[2]} \t Status:- {book[7]} \n 
             Start Date: {book[8] if book[8] else 'N/A'} \t Reading Time:- {formatted_time} \t Pages:- {book[4]} \t Rating:- {book[6] if book[6] else 'N/A'} \n
             End Date: {book[9] if book[9] else 'N/A'}\n
             Review:- {wrapped_review}
@@ -1115,7 +1121,7 @@ class App(ct.CTk):
                                       text_color="white", font=("arial black", 26))
         self.oldbooklabel.grid(row=2,column=1,padx=20, pady=20)
 
-        image = Image.open("img/home.png")
+        image = Image.open("D:/code/MTCNN_Prac/Streamlit/VBL/img/home.png")
         ctk_image = ct.CTkImage(light_image=image, size=(120,35))
 
         self.backtodash = ct.CTkButton(self.oldbookframe,text="", hover_color="#3d3d3d",image=ctk_image,corner_radius=1000,bg_color="transparent",fg_color="transparent", width=150, height=40 ,compound="left", command=self.backtodashboard5)
@@ -1140,7 +1146,7 @@ class App(ct.CTk):
         self.rightimglabel = ct.CTkLabel(self.rightimgframe,text="")
         self.rightimglabel.pack(padx=20, pady=10)
 
-        image = Image.open("img/book3.jpg")
+        image = Image.open("D:/code/MTCNN_Prac/Streamlit/VBL/img/book3.jpg")
 
         ctk_image = ct.CTkImage(light_image=image, size=(575,1123))
         
@@ -1311,7 +1317,7 @@ class App(ct.CTk):
         self.bookanalysisframe = ct.CTkFrame(self.main_frame, width=1200, height=40, fg_color="transparent")
         self.bookanalysisframe.pack(pady=20, padx=20)
 
-        image = Image.open("img/home.png")
+        image = Image.open("D:/code/MTCNN_Prac/Streamlit/VBL/img/home.png")
         ctk_image = ct.CTkImage(light_image=image, size=(120,35))
         self.backtodash = ct.CTkButton(self.bookanalysisframe,text="", hover_color="#3d3d3d",image=ctk_image,corner_radius=1000,bg_color="transparent",fg_color="transparent", width=150, height=40 ,compound="left", command=self.backtodashboard4)
         self.backtodash.grid(row=0, column=0, padx=20, pady=10,sticky="w")
@@ -1365,7 +1371,7 @@ class App(ct.CTk):
         self.booklibrarytopframe = ct.CTkFrame(self.main_frame, width=1200, height=40, fg_color="transparent")
         self.booklibrarytopframe.pack(pady=20, padx=20)
 
-        image = Image.open("img/home.png")
+        image = Image.open("D:/code/MTCNN_Prac/Streamlit/VBL/img/home.png")
         ctk_image = ct.CTkImage(light_image=image, size=(120,35))
         self.libbacktodash = ct.CTkButton(self.booklibrarytopframe,text="", hover_color="#3d3d3d",image=ctk_image,corner_radius=1000,bg_color="transparent",fg_color="transparent", width=150, height=40 ,compound="left", command=self.backtodashboard6)
         self.libbacktodash.grid(row=0, column=0, padx=20, pady=10,sticky="w")
@@ -1411,7 +1417,7 @@ class App(ct.CTk):
         self.lib_gifimg = ct.CTkLabel(self.booklibrarygifframe, text = "")
         self.lib_gifimg.pack()
 
-        self.lib_gif_path = "img/lib_bg.gif"  
+        self.lib_gif_path = r"D:\code\MTCNN_Prac\Streamlit\VBL\img\lib_bg.gif"
         self.gif = Image.open(self.lib_gif_path)
 
         self.resize_width = 1044  
@@ -1543,6 +1549,11 @@ class App(ct.CTk):
                 blen = 0
 
                 for book_name in lib_book:
+                    if len(book_name)>18:
+                        book_name="\n".join(textwrap.wrap(book_name, width=18))
+                    else:
+                        pass
+
                     book_button = ct.CTkButton(
                         self.booklibrarymainframe,
                         text=book_name,
